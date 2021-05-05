@@ -16,12 +16,10 @@ local objectHasEvery(obj, arr, i=0) = (
 
 # # # # # # # # # # # # # # # # # #
 
-    local UserType = {
-       attrs: [],
+local UserType = {
+  attrs: [],
 
-
-
-      groups:: error std.format('User "%s" is missing parameter "groups"', self.lanid),
+  groups:: error std.format('User "%s" is missing parameter "groups"', self.lanid),
   lanid: error std.format('Internal error: User "%s" field "lanid" not being set', self.lanid),
   team: error std.format('Internal error: User "%s" field "team" not being set', self.lanid),
   union: error std.format('Internal error: User "%s" field "union" not being set', self.lanid),
@@ -158,20 +156,9 @@ local BuildIncludedUsers(inc, group_k, include_unions) = (
     function(x, y) x && y,
     [
 
-
-
-
-
-
-
-
-
-
-
-
-                  if !std.isObject(inc[k])
+      if !std.isObject(inc[k])
       then false
-            else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
+      else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
       for k in std.objectFields(inc)
     ],
     true
