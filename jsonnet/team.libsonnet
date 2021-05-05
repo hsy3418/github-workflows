@@ -148,25 +148,20 @@ local BuildIncludedUsers(inc, group_k, include_unions) = (
     if include_unions
     then inc.users
     else {
-                     [if !inc.users[lanid].union then lanid]: inc.users[lanid]
+      [if !inc.users[lanid].union then lanid]: inc.users[lanid]
 
-
-
-
-
-                    for lanid in std.objectFields(inc.users)
+      for lanid in std.objectFields(inc.users)
     }
 
   else if std.foldr(
     function(x, y) x && y,
     [
 
-             if !std.isObject(inc[k])
+      if !std.isObject(inc[k])
 
+      then false
 
-            then false
-
-            else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
+      else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
       for k in std.objectFields(inc)
     ],
     true
