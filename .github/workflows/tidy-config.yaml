@@ -26,7 +26,7 @@ jobs:
           TOKEN: ${{ steps.get_token.outputs.app_token }}
 
       - name: clone
-        command: |
+        run: |
           git clone https://${{ steps.get_token.outputs.app_token }}@github.com/hsy3418/github-workflows.git
 
       # - name: Checkout
