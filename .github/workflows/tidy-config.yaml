@@ -46,6 +46,7 @@ jobs:
             if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
               jsonnetfmt $file -i --comment-style h --max-blank-lines 1 --pad-arrays --pad-objects
             fi
+          done
 
       - name: "Push changes"
         run: |
