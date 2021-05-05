@@ -12,18 +12,18 @@ jobs:
     name: Lint and Format UAM config files
     runs-on: ubuntu-latest
     steps:
-    - name: Get token
-      id: get_token
-      uses: machine-learning-apps/actions-app-token@master
-      with:
-        APP_PEM: ${{ secrets.APP_PEM }}
-        APP_ID: ${{ secrets.APP_ID }}
+      - name: Get token
+        id: get_token
+        uses: machine-learning-apps/actions-app-token@master
+        with:
+          APP_PEM: ${{ secrets.APP_PEM }}
+          APP_ID: ${{ secrets.APP_ID }}
 
-    - name: Get App Installation Token
-      run: |
-        echo "This token is masked: ${TOKEN}"
-      env:
-        TOKEN: ${{ steps.get_token.outputs.app_token }}
+      - name: Get App Installation Token
+        run: |
+          echo "This token is masked: ${TOKEN}"
+        env:
+          TOKEN: ${{ steps.get_token.outputs.app_token }}
 
       - name: Checkout
         uses: actions/checkout@v2
