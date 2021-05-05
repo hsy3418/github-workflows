@@ -163,9 +163,15 @@ local BuildIncludedUsers(inc, group_k, include_unions) = (
 
 
 
+
+
+
+
+
+
                   if !std.isObject(inc[k])
       then false
-      else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
+            else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
       for k in std.objectFields(inc)
     ],
     true
