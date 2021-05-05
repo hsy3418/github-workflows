@@ -1,0 +1,58 @@
+name: tidy-config
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/tidy-config.yaml
+      - 'jsonnet/**'
+
+jobs:
+  tidy:
+    name: Lint and Format UAM config files
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get token
+      id: get_token
+      uses: machine-learning-apps/actions-app-token@master
+      with:
+        APP_PEM: ${{ secrets.APP_PEM }}
+        APP_ID: ${{ secrets.APP_ID }}
+
+    - name: Get App Installation Token
+      run: |
+        echo "This token is masked: ${TOKEN}"
+      env:
+        TOKEN: ${{ steps.get_token.outputs.app_token }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ steps.get_token.outputs.app_token }}
+
+      - name: "Jsonnet format"
+        run: |
+          go get  -u -v github.com/google/go-jsonnet/cmd/jsonnetfmt
+          export PATH=${PATH}:`go env GOPATH`/bin
+          files=$(git diff --name-only origin/main HEAD)
+          for file in $files; do
+            if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
+              jsonnetfmt $file -i --comment-style h --max-blank-lines 1 --pad-arrays --pad-objects
+            fi
+          done
+
+      - name: "Push changes"
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            UNSTAGED_FILES=$(git diff --name-only)
+            for file in $UNSTAGED_FILES; do
+              if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
+                git add $file
+              fi
+            done
+            git commit -m "Automated formatting of UAM config files"
+            git status
+            git push
+          fi
