@@ -54,9 +54,17 @@ jobs:
             done
           fi
 
-      - name: Commit & Push changes
-        uses: actions-js/push@master
+      - name: commit
+        uses: EndBug/add-and-commit@v7
         with:
-          github_token: ${{ steps.get_token.outputs.app_token }}
-          branch: test03
           message: Automated formatting of UAM config files
+          branch: test03
+
+
+
+      # - name: Commit & Push changes
+      #   uses: actions-js/push@master
+      #   with:
+      #     github_token: ${{ steps.get_token.outputs.app_token }}
+      #     branch: test03
+      #     message: Automated formatting of UAM config files
