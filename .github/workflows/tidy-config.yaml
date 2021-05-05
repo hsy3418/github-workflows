@@ -52,7 +52,11 @@ jobs:
                 git add $file
               fi
             done
-            git commit -m "Automated formatting of UAM config files"
-            git status
-            git push
           fi
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ steps.get_token.outputs.app_token }}
+          branch: main
+          message: Automated formatting of UAM config files
