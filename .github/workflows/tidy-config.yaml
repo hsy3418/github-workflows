@@ -38,7 +38,6 @@ jobs:
           token: ${{ steps.get_token.outputs.app_token }}
 
       - name: "Jsonnet format"
-        working_directory: ~/workdir/github-workflows
         run: |
           go get  -u -v github.com/google/go-jsonnet/cmd/jsonnetfmt
           export PATH=${PATH}:`go env GOPATH`/bin
