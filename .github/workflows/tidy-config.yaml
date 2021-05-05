@@ -25,46 +25,44 @@ jobs:
         env:
           TOKEN: ${{ steps.get_token.outputs.app_token }}
 
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ steps.get_token.outputs.app_token }}
+      - name: clone
+        command: |
+          git clone https://${{ steps.get_token.outputs.app_token }}@github.com/hsy3418/github-workflows.git
 
-      - name: "Jsonnet format"
-        run: |
-          go get  -u -v github.com/google/go-jsonnet/cmd/jsonnetfmt
-          export PATH=${PATH}:`go env GOPATH`/bin
-          files=$(git diff --name-only origin/main HEAD)
-          for file in $files; do
-            if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
-              jsonnetfmt $file -i --comment-style h --max-blank-lines 1 --pad-arrays --pad-objects
-            fi
-          done
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+      #   with:
+      #     fetch-depth: 0
+      #     ref: ${{ github.event.pull_request.head.ref }}
+      #     token: ${{ steps.get_token.outputs.app_token }}
 
-      - name: "Push changes"
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            UNSTAGED_FILES=$(git diff --name-only)
-            for file in $UNSTAGED_FILES; do
-              if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
-                git add $file
-              fi
-            done
-          fi
+      # - name: "Jsonnet format"
+      #   run: |
+      #     go get  -u -v github.com/google/go-jsonnet/cmd/jsonnetfmt
+      #     export PATH=${PATH}:`go env GOPATH`/bin
+      #     files=$(git diff --name-only origin/main HEAD)
+      #     for file in $files; do
+      #       if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
+      #         jsonnetfmt $file -i --comment-style h --max-blank-lines 1 --pad-arrays --pad-objects
+      #       fi
+      #     done
 
-      - name: commit
-        uses: EndBug/add-and-commit@v7
-        with:
-          message: Automated formatting of UAM config files
-          branch: test03
-
-
-
+      # - name: "Push changes"
+      #   run: |
+      #     if [ -n "$(git status --porcelain)" ]; then
+      #       UNSTAGED_FILES=$(git diff --name-only)
+      #       for file in $UNSTAGED_FILES; do
+      #         if [[ $file =~ [.]jsonnet$|[.]libsonnet$ ]]; then
+      #           git add $file
+      #         fi
+      #       done
+      #       # git commit -m "Automated formatting of UAM config files"
+      #       # git status
+      #       # git push
+      #     fi
       # - name: Commit & Push changes
       #   uses: actions-js/push@master
       #   with:
       #     github_token: ${{ steps.get_token.outputs.app_token }}
-      #     branch: test03
-      #     message: Automated formatting of UAM config files
+      #     branch: main
+      #     message:
