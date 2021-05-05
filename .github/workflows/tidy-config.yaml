@@ -58,5 +58,5 @@ jobs:
         uses: actions-js/push@master
         with:
           github_token: ${{ steps.get_token.outputs.app_token }}
-          branch: main
+          branch: test03
           message: Automated formatting of UAM config files

@@ -157,7 +157,10 @@ local BuildIncludedUsers(inc, group_k, include_unions) = (
     function(x, y) x && y,
     [
 
-      if !std.isObject(inc[k])
+
+
+
+                      if !std.isObject(inc[k])
 
       then false
 
