@@ -1,1 +1,1 @@
-useless data
+commit from Go API
