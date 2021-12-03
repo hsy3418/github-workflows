@@ -14,10 +14,6 @@ jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
-      - name: atuh
-        run: |
-          git config --global user.email
-          
       - name: Checkout
         uses: actions/checkout@v2
         with:
