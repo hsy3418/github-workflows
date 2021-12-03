@@ -14,6 +14,13 @@ jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+          ref: master
+          
       - run: |
+          echo ${git rev-parse HEAD}
           echo "Hello ${{ github.event.inputs.name }}!"
           echo "- in ${{ github.event.inputs.home }}!"
