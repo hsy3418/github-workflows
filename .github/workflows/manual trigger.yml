@@ -1,14 +1,6 @@
 name: Manually triggered workflow
 on:
   workflow_dispatch:
-    inputs:
-      name:
-        description: 'Person to greet'
-        required: true
-      home:
-        description: 'location'
-        required: false
-        default: 'The Octoverse'
 
 jobs:
   say_hello:
@@ -27,6 +19,5 @@ jobs:
           echo "::set-output name=sha::$SHA"
             
       - run: |
-          echo ${git rev-parse HEAD}
           echo "Hello ${{ steps.get_sha.outputs.sha }}!"
           echo "- in ${{ github.event.inputs.home }}!"
