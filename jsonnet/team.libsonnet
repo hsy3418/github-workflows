@@ -16,10 +16,12 @@ local objectHasEvery(obj, arr, i=0) = (
 
 # # # # # # # # # # # # # # # # # #
 
-local UserType = {
-  attrs: [],
+    local UserType = {
+       attrs: [],
 
-  groups:: error std.format('User "%s" is missing parameter "groups"', self.lanid),
+
+
+      groups:: error std.format('User "%s" is missing parameter "groups"', self.lanid),
   lanid: error std.format('Internal error: User "%s" field "lanid" not being set', self.lanid),
   team: error std.format('Internal error: User "%s" field "team" not being set', self.lanid),
   union: error std.format('Internal error: User "%s" field "union" not being set', self.lanid),
@@ -149,18 +151,14 @@ local BuildIncludedUsers(inc, group_k, include_unions) = (
     then inc.users
     else {
       [if !inc.users[lanid].union then lanid]: inc.users[lanid]
-
       for lanid in std.objectFields(inc.users)
     }
 
   else if std.foldr(
     function(x, y) x && y,
     [
-
       if !std.isObject(inc[k])
-
       then false
-
       else objectHasEvery(inc[k], [ 'attrs', 'groups' ])
       for k in std.objectFields(inc)
     ],
@@ -269,7 +267,9 @@ function(t) (
     # unions) which contain a matching attr stirng.
     usersByAttr(attr)::
       {
-        [if contains($.users[lanid].attrs, attr) && !$.users[lanid].union then lanid]: $.users[lanid]
+
+
+                [if contains($.users[lanid].attrs, attr) && !$.users[lanid].union then lanid]: $.users[lanid]
         for lanid in std.objectFields($.users)
       },
 
