@@ -14,13 +14,23 @@ jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
+      - name: atuh
+        run: |
+          git config --global user.email
+          
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          ref: master
-          
+          ref: master  
+
+      - id: get_sha
+        name: Get latest sha
+        run: |
+            SHA=$(git rev-parse HEAD)
+            echo "::set-output name=sha::$SHA"
+            
       - run: |
           echo ${git rev-parse HEAD}
-          echo "Hello ${{ github.event.inputs.name }}!"
+          echo "Hello ${{ steps.get_sha.outputs.sha }}!"
           echo "- in ${{ github.event.inputs.home }}!"
